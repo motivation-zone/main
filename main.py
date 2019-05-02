@@ -1,10 +1,19 @@
 from aiohttp import web
 from routes_union import setup_routes
+from aiohttp_session import session_middleware
+from aiohttp_session.cookie_storage import EncryptedCookieStorage
+import hashlib
+from settings import *
+from middlewares.authorization import authorization
 
 
 async def init_app():
+    middle = [
+        session_middleware(EncryptedCookieStorage(hashlib.sha256(bytes(SECRET_KEY, 'utf-8')).digest())),
+        authorization,
+    ]
 
-    app = web.Application()
+    app = web.Application(middlewares=middle)
     setup_routes(app)
     # setup_middlewares(app)
 
