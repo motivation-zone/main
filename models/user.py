@@ -1,9 +1,4 @@
-from fake_data.user import users
 from db_sevice.user import User as User_model
-
-
-async def get_user(login: str, password: str) -> bool:
-    return login in users and users[login] == password
 
 
 class User:

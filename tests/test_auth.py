@@ -2,16 +2,11 @@ from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 from main import init_app
 import json
 from db_sevice.user import User as User_model
+from fake_data.user import user_data as fake_user
 
 
 class AuthTestCase(AioHTTPTestCase):
-    user_data = {
-        'login': 'login',
-        'name': 'user',
-        'password': 'password',
-        'email': 'your_mom@mail.ru',
-        'gender': True
-    }
+    user_data = fake_user
 
     async def get_application(self):
         await User_model.remove_users()

@@ -9,7 +9,7 @@ class MyAppTestCase(AioHTTPTestCase):
 
     @unittest_run_loop
     async def test_example(self):
-        resp = await self.client.request("GET", "/api/index")
+        resp = await self.client.request("GET", "/")
         assert resp.status == 200
         json_resp = await resp.json()
         assert {'msg': 'OK'} == json_resp

@@ -1,4 +1,3 @@
-from fake_data.user import users
 from db_sevice.helpers.requests import request_to_db_service, handle_response
 
 
