@@ -4,6 +4,6 @@ from routes.user_page import routes as user_page_routes
 
 
 def setup_routes(app):
-    app.add_routes(index_routes)
-    app.add_routes(auth_routes)
-    app.add_routes(user_page_routes)
+    app.router.add_routes(index_routes)
+    app.router.add_routes(auth_routes)
+    app.router.add_routes(user_page_routes)
