@@ -1,5 +1,4 @@
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
-from aiohttp import web
 from main import init_app
 
 
@@ -10,7 +9,7 @@ class MyAppTestCase(AioHTTPTestCase):
 
     @unittest_run_loop
     async def test_example(self):
-        resp = await self.client.request("GET", "/")
+        resp = await self.client.request("GET", "/api/index")
         assert resp.status == 200
-        text = await resp.text()
-        assert "Hello, world" in text
+        json_resp = await resp.json()
+        assert {'msg': 'OK'} == json_resp
