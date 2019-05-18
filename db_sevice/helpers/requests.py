@@ -4,6 +4,7 @@ from db_sevice.helpers.url_tools import make_url
 
 
 async def request_to_db_service(request_data):
+    print(make_url(DB_SERVICE_URL, request_data['url']))
     async with aiohttp.ClientSession(headers=HEADERS) as session:
         if request_data['type'] == 'POST':
             response = await session.post(make_url(DB_SERVICE_URL, request_data['url']), json=request_data['data'])

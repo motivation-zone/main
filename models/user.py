@@ -38,3 +38,32 @@ class User:
     @staticmethod
     async def check_user(user_params: dict):
         return await User_model.check_user(user_params)
+
+    @staticmethod
+    async def update_user(user_login, user_params: dict):
+        user = await User_model.get_user_by_login(user_login)
+        if not user:
+            return 404, "User not found"
+
+        for parameter in user_params.keys():
+
+            if parameter == 'id':  # нельзя давать редактировать id
+                continue
+            if user.get(parameter):
+                user[parameter] = user_params[parameter]
+
+        status, data = await User_model.update_user(user['id'], user_params)
+        if status == 200:
+            return status, 'OK'
+        else:
+            error_message = data['message']
+        return status, error_message
+
+    @staticmethod
+    async def delete_user(user_id):
+        status, data = await User_model.delete_user(user_id)
+        if status == 200:
+            return status, 'OK'
+        else:
+            error_message = data['message']
+        return status, error_message

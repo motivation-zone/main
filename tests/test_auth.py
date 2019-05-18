@@ -9,11 +9,11 @@ class AuthTestCase(AioHTTPTestCase):
     user_data = fake_user
 
     async def get_application(self):
-        await User_model.remove_users()
         return await init_app(mode='test')
 
     @unittest_run_loop
     async def test_join(self):
+        await User_model.remove_users()
         resp = await self.client.post("/join", json=self.user_data)
         assert resp.status == 200
         json_resp = await resp.json()
@@ -37,11 +37,10 @@ class AuthTestCase(AioHTTPTestCase):
     @unittest_run_loop
     async def test_logout(self):
         # first login
-        await self.client.post("/login", json={
+        resp = await self.client.post("/login", json={
             'login': self.user_data['login'],
             'password': self.user_data['password']
         })
-
         resp = await self.client.get("/logout")
         assert resp.status == 200
         json_resp = await resp.json()
@@ -53,4 +52,4 @@ class AuthTestCase(AioHTTPTestCase):
     @unittest_run_loop
     async def test_logout_without_login(self):
         resp = await self.client.get("/logout")
-        assert resp.status == 409
+        assert resp.status == 401
